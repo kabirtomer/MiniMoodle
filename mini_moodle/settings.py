@@ -28,7 +28,7 @@ SECRET_KEY = 'zq%a-*5-7y(k@ici6ygs$d9ioc*t)#=wdk+%n_p7om49v=t+9u'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'demo-minimoodle.herokuapp.com',
+'kt-minimoodle.herokuapp.com',
 '127.0.0.1'
 ]
 
