@@ -22,7 +22,20 @@ def course_view(request,pk):
 		elif request.user.profile.is_prof==0:
 			can_join= not can_leave
 
+	can_see=False
+	messages=[]
+	for message in models.Message.objects.filter(course=course):
+		regs=message.course.registrations.all()
+		for i in regs:
+			if request.user==i.student and i.date<=message.date:
+				can_see=True
+		if request.user==message.course.prof:
+			can_see=True
+		if can_see:
+			messages.append(message)
+
 	params= {
+		'messages':messages, 
 		'course':course, 
 		'regs':regs, 
 		'is_course_prof':is_course_prof, 
@@ -46,6 +59,18 @@ def my_courses_view(request):
 				courses.append(i.course)
 			return render(request, 'homepage.html',{'courses':courses})
 	return redirect('')
+
+def create_course_view(request):
+	if request.user.is_authenticated and request.user.profile.is_prof==1 and request.method=='POST':
+		form = forms.CourseForm(request.POST)
+		if form.is_valid():
+			course=form.save(commit=False)
+			course.prof=request.user
+			course.save()
+			return redirect('course', pk=course.pk)
+	else:
+		form=forms.CourseForm()
+	return render(request, 'create_course.html',{'form':form, 'can_create': request.user.profile.is_prof==1})	
 
 
 def join_course_view(request, pk):
@@ -102,3 +127,30 @@ def new_topic(request):
     else:
         form = NewPostForm()
     return render(request, 'home.html', {'form' : form, 'object_list' : object_list})
+
+def create_message_view(request,pk):
+	course = get_object_or_404(models.Course,pk=pk)
+	if request.user.is_authenticated and request.user==course.prof and request.method=='POST':
+		form = forms.MessageForm(request.POST)
+		if form.is_valid():
+			message=form.save(commit=False)
+			message.course=course
+			message.save()
+			return redirect('message', pk=message.pk)
+	else:
+		form=forms.MessageForm()
+	return render(request, 'create_message.html',{'form':form, 'can_create': request.user==course.prof})	
+
+def message_view(request,pk):
+
+	message = get_object_or_404(models.Message,pk=pk)
+	can_see=False
+	if request.user.is_authenticated:
+		regs=message.course.registrations.all()
+		for i in regs:
+			if request.user==i.student and i.date<=message.date:
+				can_see=True
+		if request.user==message.course.prof:
+			can_see=True
+
+	return render(request, 'message.html',{'message':message, 'can_see':can_see})

@@ -20,6 +20,10 @@
         {% elif can_leave%}
         <a href="{% url 'leave_course' course.pk %}">Leave {{ course.name }}</a></h4>
         {%endif%}
+        <h3>Messages:</h3>
+        {%for i in messages%}
+        <a href="{% url 'message' i.pk%}"> {{i.title}}</a>
+        {%endfor%}
 
 
 
