@@ -28,7 +28,8 @@ SECRET_KEY = 'zq%a-*5-7y(k@ici6ygs$d9ioc*t)#=wdk+%n_p7om49v=t+9u'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'demo-minimoodle.herokuapp.com'
+'demo-minimoodle.herokuapp.com',
+'127.0.0.1'
 ]
 
 
@@ -129,3 +130,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+import django_heroku
+django_heroku.settings(locals())
