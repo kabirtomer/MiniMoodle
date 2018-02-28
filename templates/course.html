@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>First Page!</title>
+</head>
+<body>
+	<h3>Hi There!</h3>
+	    <h4> {{ course.name }}</h4>
+	    <h5> {{ course.subtitle }}</h5>
+	    <h6> {{ course.prof }}</h6>
+	    {%for j in regs%}
+        	<ul>
+        		<li> {{j.student}}</li>
+        	</ul>
+        {%endfor%}
+
+
+</body>
+</html>
