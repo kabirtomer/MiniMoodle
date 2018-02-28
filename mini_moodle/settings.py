@@ -27,7 +27,9 @@ SECRET_KEY = 'zq%a-*5-7y(k@ici6ygs$d9ioc*t)#=wdk+%n_p7om49v=t+9u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+'demo-minimoodle.herokuapp.com'
+]
 
 
 # Application definition
