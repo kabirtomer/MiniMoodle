@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from . import models
+from django.shortcuts import render, get_object_or_404, redirect
+from . import models, forms
 
 # Create your views here.
 def homepage(request):
@@ -10,4 +10,95 @@ def course_view(request,pk):
 
 	course = get_object_or_404(models.Course,pk=pk)
 	regs=course.registrations.all()
-	return render(request, 'course.html',{'course':course, 'regs':regs})
+	is_course_prof=False
+	can_leave=False
+	can_join=False
+	if request.user.is_authenticated:
+		for i in regs:
+			if request.user==i.student:
+				can_leave=True
+		if request.user==course.prof:
+			is_course_prof=True
+		elif request.user.profile.is_prof==0:
+			can_join= not can_leave
+
+	params= {
+		'course':course, 
+		'regs':regs, 
+		'is_course_prof':is_course_prof, 
+		'can_leave':can_leave, 
+		'can_join':can_join,
+		}
+
+	return render(request, 'course.html',params)
+
+
+def my_courses_view(request):
+	
+	if (request.user.is_authenticated):
+		if request.user.profile.is_prof==1 :
+			courses= request.user.courses_teaching.all()
+			return render(request, 'homepage.html',{'courses':courses})
+		else:
+			courses=[]
+			regs= request.user.registrations.all()
+			for i in regs:
+				courses.append(i.course)
+			return render(request, 'homepage.html',{'courses':courses})
+	return redirect('')
+
+
+def join_course_view(request, pk):
+	course = get_object_or_404(models.Course,pk=pk)
+	can_leave=False
+	can_join=False
+	regs=course.registrations.all()
+	if request.user.is_authenticated:
+		for i in regs:
+			if request.user==i.student:
+				can_leave=True
+		if request.user.profile.is_prof==0:
+			can_join= not can_leave
+	if request.method == 'POST' and can_join:
+		form = forms.RegistrationForm(request.POST)
+		if form.is_valid():
+			reg=form.save(commit=False)
+			reg.course=course
+			reg.student=request.user
+			reg.save()
+			return redirect('course', pk=course.pk)
+	else:
+		form=forms.RegistrationForm()
+	return render(request, 'join_course.html', {'form' : form, 'course' : course, 'can_join':can_join})
+def leave_course_view(request,pk):
+	course = get_object_or_404(models.Course,pk=pk)
+	can_leave=False
+	regs=course.registrations.all()
+	if request.user.is_authenticated:
+		for i in regs:
+			if request.user==i.student:
+				can_leave=True
+				reg=i
+	if request.method == 'POST' and can_leave:
+		form = forms.RegistrationForm(request.POST)
+		if form.is_valid():
+			reg.delete()
+			return redirect('course', pk=course.pk)
+	else:
+		form=forms.RegistrationForm()
+	return render(request, 'leave_course.html', {'form' : form, 'course' : course, 'can_leave': can_leave})
+
+def new_topic(request):
+    user=request.user
+    object_list=Post.objects.all()
+    if request.method == 'POST':
+        form= NewPostForm(request.POST)
+        if form.is_valid():
+            post=form.save(commit=False)
+            post.author=user
+            post.title=''
+            post.save()
+            return redirect('home')
+    else:
+        form = NewPostForm()
+    return render(request, 'home.html', {'form' : form, 'object_list' : object_list})

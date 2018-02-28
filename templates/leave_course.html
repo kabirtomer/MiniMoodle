@@ -1,0 +1,19 @@
+<<!DOCTYPE html>
+<html>
+<head>
+	<title>First Page!</title>
+</head>
+<body>
+	<h3>Hi There!</h3>
+	{% if user.is_authenticated %}
+		{%if can_leave%}
+			<form action="" method="post">{% csrf_token %}
+      		<p>Are you sure you want to leave"{{ course.name}}"?</p>
+      		<input type="submit" value="Confirm" />
+    		</form>
+    	{%endif%}
+    {%endif%}
+
+
+</body>
+</html>

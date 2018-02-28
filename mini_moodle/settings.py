@@ -125,3 +125,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
  #   os.path.join(BASE_DIR, 'static'),
 #)
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

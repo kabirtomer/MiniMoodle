@@ -15,8 +15,6 @@ class Course(models.Model):
     name = models.CharField(max_length=COURSE_NAME_LENGTH)
     subtitle = models.CharField(max_length=COURSE_SUBTITLE_LENGTH, blank=True,  null=True)
     start_date=models.DateTimeField(blank=True, null=True)
-    #registrations = models.ManyToManyField(Registration, related_name='course')
-
     def __str__(self):
         return self.name
 

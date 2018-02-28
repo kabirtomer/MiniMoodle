@@ -13,6 +13,14 @@
         		<li> {{j.student}}</li>
         	</ul>
         {%endfor%}
+        {%if is_course_prof%}
+        is_prof
+        {% elif can_join%}
+        <a href="{% url 'join_course' course.pk %}">Join {{ course.name }}</a></h4>
+        {% elif can_leave%}
+        <a href="{% url 'leave_course' course.pk %}">Leave {{ course.name }}</a></h4>
+        {%endif%}
+
 
 
 </body>
