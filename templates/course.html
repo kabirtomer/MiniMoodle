@@ -10,7 +10,8 @@
         	</ul>
         {%endfor%}
         {%if is_course_prof%}
-        is_prof
+       	<a href="{% url 'create_message' course.pk %}"> Add Message for {{ course.name }}</a></h4>
+
         {% elif can_join%}
         <a href="{% url 'join_course' course.pk %}">Join {{ course.name }}</a></h4>
         {% elif can_leave%}
@@ -18,7 +19,7 @@
         {%endif%}
         <h3>Messages:</h3>
         {%for i in messages%}
-        <a href="{% url 'message' i.pk%}"> {{i.title}}</a>
+        <a href="{% url 'message' i.pk%}"> {{i.title}} </a> on {{i.date}}<br>
         {%endfor%}
 
 

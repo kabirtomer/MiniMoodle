@@ -29,7 +29,7 @@ def course_view(request,pk):
 		for i in regs:
 			if request.user==i.student and i.date<=message.date:
 				can_see=True
-		if request.user==message.course.prof:
+		if is_course_prof:
 			can_see=True
 		if can_see:
 			messages.append(message)
