@@ -1,10 +1,5 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>First Page!</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 	{% if can_create%}
 	<h2>Create Course</h2>
 	}
@@ -15,5 +10,4 @@
 {%endif%}
 
 
-</body>
-</html>
+{%endblock%}

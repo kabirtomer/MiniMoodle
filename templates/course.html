@@ -1,9 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>First Page!</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 	<h3>Hi There!</h3>
 	    <h4> {{ course.name }}</h4>
 	    <h5> {{ course.subtitle }}</h5>
@@ -26,6 +22,4 @@
         {%endfor%}
 
 
-
-</body>
-</html>
+{%endblock%}

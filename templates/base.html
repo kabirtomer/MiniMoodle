@@ -1,0 +1,34 @@
+ <!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Mini-Moodle</title>
+ </head>
+   <body>
+      <header>
+        <div class="nav-left">
+          <h1><a href="/">Mini_Moodle</a></h1>
+        </div>
+      {% if user.is_authenticated %}
+       
+      
+        <p><a href= '{% url 'logout' %}'>Logout</a>
+        <a href="{% url 'signup' %}">Signup</a></p>
+          <p> Hi, {{ user.username }} </p>
+
+      
+      {% else %}
+        
+ 
+        <a href="{% url 'login' %}">Login</a>
+        <p>You are not logged in.</p>
+        {% endif %}
+      </header>
+      {% block content %}
+      {% endblock content %}
+
+      
+
+    </div>
+  </body>
+</html>

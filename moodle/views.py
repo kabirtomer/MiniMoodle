@@ -58,7 +58,7 @@ def my_courses_view(request):
 			for i in regs:
 				courses.append(i.course)
 			return render(request, 'homepage.html',{'courses':courses})
-	return redirect('')
+	return redirect('home')
 
 def create_course_view(request):
 	if request.user.is_authenticated and request.user.profile.is_prof==1 and request.method=='POST':

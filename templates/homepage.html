@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>First Page!</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 	<h3>Hi There!</h3>
 	{% for i in courses %}
 	    <h4> <a href="{% url 'course' i.pk %}">{{ i.name }}</a></h4>
 	    
     {%endfor%}
     {{user.profile.is_prof}}
-
-
-</body>
-</html>
+{%endblock%}

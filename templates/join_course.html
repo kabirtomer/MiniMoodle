@@ -1,9 +1,5 @@
-<<!DOCTYPE html>
-<html>
-<head>
-	<title>First Page!</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 	<h3>Hi There!</h3>
 	{% if user.is_authenticated %}
 		{%if can_join%}
@@ -15,5 +11,4 @@
     {%endif%}
 
 
-</body>
-</html>
+{%endblock%}

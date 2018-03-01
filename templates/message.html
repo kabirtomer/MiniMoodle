@@ -1,10 +1,5 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>First Page!</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 	{% if can_see%}
 	<p>{{message.title}}</p>
 	<p>{{message.text}}</p>
@@ -12,6 +7,4 @@
 	<p>{{message.date}}</p>
 {%endif%}
 
-
-</body>
-</html>
+{%endblock%}
