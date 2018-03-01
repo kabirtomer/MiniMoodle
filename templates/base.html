@@ -22,7 +22,13 @@
         <a href="{% url 'login' %}">Login</a>
         <p>You are not logged in.</p>
         {% endif %}
+        <a href="/">All Courses</a>
+        |<a href="{% url 'my_courses' %}">My Courses</a>
+        {%if user.profile.is_prof == 1%}
+        |<a href = "{% url 'create_course' %}"> Create Course</a>
+        {%endif%}
       </header>
+      <hr>
       {% block content %}
       {% endblock content %}
 
